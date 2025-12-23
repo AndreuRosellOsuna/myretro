@@ -81,13 +81,20 @@ Copyright (c) 2016-present Vuetify, LLC
 
 # Useful commands
 
-## Create image
-```
+## Create retro image
+```shell
 docker build . -t myretro
 docker tag myretro andreuro/myretro:0.0.1 
-docker push andreuro/myretro:0.0.
+docker push andreuro/myretro:0.0.1
 ```
-## Run image
-```
+## Run retro image
+```shell
 docker run -p 127.0.0.1:3000:3000 --rm --name myretro --network reverse_proxy_network andreuro/myretro:0.0.1
+```
+
+## Create and run pocketbase image
+```shell
+docker build . -t andreuro/myretropocket:0.0.1
+docker push andreuro/myretropocket:0.0.1
+docker run -p 8090:8090 --name myretropocket --rm myretropocket
 ```
