@@ -77,3 +77,17 @@ This project is built with [Vuetify](https://vuetifyjs.com/en/), a UI Library wi
 [MIT](http://opensource.org/licenses/MIT)
 
 Copyright (c) 2016-present Vuetify, LLC
+
+
+# Useful commands
+
+## Create image
+```
+docker build . -t myretro
+docker tag myretro andreuro/myretro:0.0.1 
+docker push andreuro/myretro:0.0.
+```
+## Run image
+```
+docker run -p 127.0.0.1:3000:3000 --rm --name myretro --network reverse_proxy_network andreuro/myretro:0.0.1
+```
