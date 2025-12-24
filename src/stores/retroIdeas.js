@@ -23,6 +23,9 @@ export const useRetroIdeasStore = defineStore('retroIdeas', {
           this.$reset()
           this.ideas.push(...ideasFromServer)
         })
-    }
+    },
+    async removeIdea(ideaId) {
+      await pocketbase.collection("ideas").delete(ideaId)
+    },
   }
 })

@@ -22,6 +22,11 @@ onUnmounted(() => ideasSubscription.unsubscribe())
 function addNewIdea(column, ideaText){
   ideasStore.addIdea(column, ideaText)
 }
+
+function removeIdea(ideaId){
+  ideasStore.removeIdea(ideaId)
+}
+
 </script>
 
 <template>
@@ -34,6 +39,7 @@ function addNewIdea(column, ideaText){
                 dialog-title="Add something that went so well that we should do more of it"
                 :ideas="thingsWentWell"
                 @add-new-idea="addNewIdea"
+                @remove-idea="removeIdea"
                 style="background-color: green">
         </Column>
         <Column column="TWNSW"
@@ -41,6 +47,7 @@ function addNewIdea(column, ideaText){
                 dialog-title="Add something that went not so well that we should stop doing it"
                 :ideas="thingsWentNotSoWell"
                 @add-new-idea="addNewIdea"
+                @remove-idea="removeIdea"
                 style="background-color: orangered">
 
         </Column>
@@ -49,6 +56,7 @@ function addNewIdea(column, ideaText){
                 dialog-title="Add a feeling that you have"
                 :ideas="feelings"
                 @add-new-idea="addNewIdea"
+                @remove-idea="removeIdea"
                 style="background-color: dodgerblue">
         </Column>
 
