@@ -1,19 +1,10 @@
 import {defineStore} from 'pinia'
+import pocketbase from "@/plugins/pocketbase.js";
 
 export const useRetroIdeasStore = defineStore('retroIdeas', {
   state: () => ({
     /** @type {{ id: number, column: 'TWW' | 'TWNSW' | 'FF', text: string }[]} */
-    ideas: [
-      {id: 11, column: "TWW", text: 'Hello'},
-      {id: 12, column: "TWW", text: 'Hello'},
-      {id: 13, column: "TWW", text: 'Hello'},
-      {id: 14, column: "TWW", text: 'Hello'},
-      {id: 21, column: "TWNSW", text: 'Hello'},
-      {id: 22, column: "TWNSW", text: 'Hello'},
-      {id: 31, column: "FF", text: 'Hello'},
-      {id: 32, column: "FF", text: 'Hello'},
-      {id: 33, column: "FF", text: 'Hello'},
-    ]
+    ideas: []
   }),
   getters: {
     thingsWentWell: state => state.ideas.filter(e => e.column === "TWW"),
@@ -21,8 +12,17 @@ export const useRetroIdeasStore = defineStore('retroIdeas', {
     feelings: state => state.ideas.filter(e => e.column === "FF"),
   },
   actions: {
-    addIdea(column, text) {
-      this.ideas.push({id: this.ideas.size, column, text})
+    async addIdea(column, text) {
+      await pocketbase.collection("ideas").create({column, text})
+    },
+    refreshIdeas() {
+      pocketbase.collection("ideas")
+        .getFullList()
+        .then(ideas => {
+          const ideasFromServer = ideas.map(idea => ({id: idea.id, column: idea.column, text: idea.text}))
+          this.$reset()
+          this.ideas.push(...ideasFromServer)
+        })
     }
   }
 })

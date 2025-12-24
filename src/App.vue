@@ -1,12 +1,24 @@
 <script setup>
 import Column from "@/components/Column.vue";
 import AppFooter from "@/components/AppFooter.vue";
-
 import {useRetroIdeasStore} from "@/stores/retroIdeas.js";
 import {storeToRefs} from "pinia";
+import {onMounted, onUnmounted} from "vue";
+import pocketbase from "@/plugins/pocketbase.js";
 
 const ideasStore = useRetroIdeasStore()
 const {thingsWentWell, thingsWentNotSoWell, feelings} = storeToRefs(ideasStore)
+
+let ideasSubscription
+
+onMounted(() => {
+  ideasStore.refreshIdeas()
+  ideasSubscription = pocketbase.collection("ideas").subscribe("*", event => {
+    ideasStore.refreshIdeas()
+  })
+})
+
+onUnmounted(() => ideasSubscription.unsubscribe())
 
 function addNewIdea(column, ideaText){
   ideasStore.addIdea(column, ideaText)
