@@ -83,13 +83,14 @@ Copyright (c) 2016-present Vuetify, LLC
 
 ## Create retro image
 ```shell
+npm run build
 docker build . -t myretro
-docker tag myretro andreuro/myretro:0.0.1 
-docker push andreuro/myretro:0.0.1
+docker tag myretro andreuro/myretro:0.0.2
+docker push andreuro/myretro:0.0.2
 ```
 ## Run retro image
 ```shell
-docker run -p 127.0.0.1:3000:3000 --rm --name myretro --network reverse_proxy_network andreuro/myretro:0.0.1
+docker run -p 127.0.0.1:3000:3000 --rm --name myretro --network reverse_proxy_network andreuro/myretro:0.0.2
 ```
 
 ## Create and run pocketbase image
@@ -97,4 +98,9 @@ docker run -p 127.0.0.1:3000:3000 --rm --name myretro --network reverse_proxy_ne
 docker build . -t andreuro/myretropocket:0.0.1
 docker push andreuro/myretropocket:0.0.1
 docker run -p 8090:8090 --name myretropocket --rm myretropocket
+```
+## Create myretro local docker image
+
+```shell
+npm run build --mode localdocker
 ```

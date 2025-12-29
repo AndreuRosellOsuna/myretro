@@ -775,11 +775,11 @@
   },
   {
     "id": "pbc_3606335285",
-    "listRule": null,
-    "viewRule": null,
-    "createRule": null,
-    "updateRule": null,
-    "deleteRule": null,
+    "listRule": "",
+    "viewRule": "",
+    "createRule": "",
+    "updateRule": "",
+    "deleteRule": "",
     "name": "ideas",
     "type": "base",
     "fields": [

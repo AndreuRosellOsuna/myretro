@@ -6,18 +6,18 @@ volumes:
   pocketbase-data: null
 services:
   myretro-front:
-    image: andreuro/myretro:0.0.1
+    image: andreuro/myretro:0.0.2
     container_name: myretro
     networks:
       - myretro_network
     ports:
-      - 3000:3000
+      - 127.0.0.1:3000:3000
   pocketbase:
     image: andreuro/myretropocket:0.0.1
     container_name: myretropocket-db
     networks:
       - myretro_network
     ports:
-      - 8090:8090
+      - 127.0.0.1:8090:8090
     volumes:
       - pocketbase-data:/pb/pb_data
