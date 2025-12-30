@@ -2,19 +2,25 @@
 import Column from "@/components/Column.vue";
 import {useRetroIdeasStore} from "@/stores/retroIdeas.js";
 import {storeToRefs} from "pinia";
-import {onMounted, onUnmounted} from "vue";
+import {onUnmounted, watch} from "vue";
 import pocketbase from "@/plugins/pocketbase.js";
 
 const ideasStore = useRetroIdeasStore()
-const {thingsWentWell, thingsWentNotSoWell, feelings} = storeToRefs(ideasStore)
+const {thingsWentWell, thingsWentNotSoWell, feelings, roomId} = storeToRefs(ideasStore)
 
 let ideasSubscription
 
-onMounted(() => {
-  ideasStore.refreshIdeas()
-  ideasSubscription = pocketbase.collection("ideas").subscribe("*", event => {
-    ideasStore.refreshIdeas()
-  })
+watch(roomId, () => {
+  if(roomId.value !== "") {
+    ideasSubscription && ideasSubscription.unsubscribe()
+    ideasSubscription = pocketbase.collection("ideas").subscribe("*", event => {
+      ideasStore.refreshIdeas()
+    }, {
+      filter: `room.id = '${roomId.value}'`
+    })
+  } else {
+    ideasSubscription.unsubscribe()
+  }
 })
 
 onUnmounted(() => ideasSubscription.unsubscribe())
@@ -31,7 +37,7 @@ function removeIdea(ideaId){
 
 <template>
   <v-main>
-    <v-container class="fill-height" max-width="" style="background-color: beige">
+    <v-container class="fill-height" style="background-color: beige">
       <v-row align="start">
 
         <Column column="TWW"
