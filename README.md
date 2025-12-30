@@ -85,8 +85,8 @@ Copyright (c) 2016-present Vuetify, LLC
 ```shell
 npm run build
 docker build . -t myretro
-docker tag myretro andreuro/myretro:0.0.2
-docker push andreuro/myretro:0.0.2
+docker tag myretro andreuro/myretro:latest
+docker push andreuro/myretro:latest
 ```
 ## Run retro image
 ```shell
