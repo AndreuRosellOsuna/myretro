@@ -2,6 +2,7 @@
 
 import {ref} from "vue";
 import {useRetroIdeasStore} from "@/stores/retroIdeas.js";
+import {storeToRefs} from "pinia";
 const ideasStore = useRetroIdeasStore()
 
 const retroRoomId = ref('')
@@ -13,6 +14,8 @@ const roomNameRules = {
   required: value => !!value || 'Required.',
   max: value => value.length <= 50 || 'Max 50 characters',
 }
+
+const {roomName} = storeToRefs(ideasStore)
 
 const openAddRoomDialog = ref(false)
 const newRoomName = ref("")
@@ -33,14 +36,18 @@ const createNewRoom = () => {
 
 const enterRoom = () => {
   if (!retroRoomId.value) return
-  ideasStore.setRoomId(retroRoomId.value)
+  ideasStore.joinRoom(retroRoomId.value)
 }
 
 </script>
 
 <template>
   <v-app-bar>
-    <v-app-bar-title>My Retro</v-app-bar-title>
+    <v-app-bar-title>
+      <template v-slot:default>
+        My Retro <span v-if="roomName" class="text-amber font-weight-semibold">{{roomName}}</span>
+      </template>
+    </v-app-bar-title>
     <template v-slot:append>
       <div class="mr-2 room-input-container">
         <v-text-field

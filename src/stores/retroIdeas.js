@@ -4,6 +4,7 @@ import pocketbase from "@/plugins/pocketbase.js";
 export const useRetroIdeasStore = defineStore('retroIdeas', {
   state: () => ({
     roomId: "",
+    roomName: "",
     /** @type {{ id: number, column: 'TWW' | 'TWNSW' | 'FF', text: string }[]} */
     ideas: [],
   }),
@@ -19,7 +20,13 @@ export const useRetroIdeasStore = defineStore('retroIdeas', {
     },
     async createRoom(roomName) {
       const newRoom = await pocketbase.collection("rooms").create({name: roomName})
+      this.roomName = newRoom.name
       this.setRoomId(newRoom.id)
+    },
+    async joinRoom(roomId) {
+      const room = await pocketbase.collection("rooms").getOne(roomId)
+      this.roomName = room.name
+      this.setRoomId(roomId)
     },
     async addIdea(column, text) {
       await pocketbase.collection("ideas").create({column, text, room: this.roomId})
