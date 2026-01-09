@@ -24,8 +24,7 @@ export const useIdeasStore = defineStore('ideasStore', {
         .getFullList({ filter: `room.id = '${roomStore.roomId}'`})
         .then(ideas => {
           const ideasFromServer = ideas.map(idea => ({id: idea.id, column: idea.column, text: idea.text}))
-          this.ideas = []
-          this.ideas.push(...ideasFromServer)
+          this.$patch({ideas: ideasFromServer})
         })
     },
     async removeIdea(ideaId) {

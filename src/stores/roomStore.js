@@ -9,18 +9,18 @@ export const useRoomStore = defineStore('roomStore', {
   }),
   actions: {
     setRoomId(roomId) {
-      this.roomId = roomId
+      this.$patch({roomId})
       const ideasStore = useIdeasStore()
       ideasStore.refreshIdeas()
     },
     async createRoom(roomName) {
       const newRoom = await pocketbase.collection("rooms").create({name: roomName})
-      this.roomName = newRoom.name
+      this.$patch({roomName: newRoom.name})
       this.setRoomId(newRoom.id)
     },
     async joinRoom(roomId) {
       const room = await pocketbase.collection("rooms").getOne(roomId)
-      this.roomName = room.name
+      this.$patch({roomName: room.name})
       this.setRoomId(roomId)
     },
   }
