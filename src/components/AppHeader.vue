@@ -16,7 +16,7 @@ const roomNameRules = {
   max: value => value.length <= 50 || 'Max 50 characters',
 }
 
-const {roomName} = storeToRefs(roomStore)
+const {roomName, roomId} = storeToRefs(roomStore)
 
 const openAddRoomDialog = ref(false)
 const newRoomName = ref("")
@@ -46,7 +46,7 @@ const enterRoom = () => {
   <v-app-bar>
     <v-app-bar-title>
       <template v-slot:default>
-        My Retro <span v-if="roomName" class="text-amber font-weight-semibold">{{roomName}}</span>
+        My Retro <span v-if="roomId" class="text-amber-accent-4 font-weight-semibold">{{roomId}}</span><span v-if="roomName" class="text-amber font-weight-semibold"> - {{roomName}}</span>
       </template>
     </v-app-bar-title>
     <template v-slot:append>
