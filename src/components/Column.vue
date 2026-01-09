@@ -4,9 +4,19 @@ import {ref} from "vue";
 
 const emit = defineEmits(['addNewIdea', 'removeIdea'])
 const { column } = defineProps({
-  column: String,
-  title: String,
-  dialogTitle: String,
+  column: {
+    type: String,
+    required: true,
+    validator: value => ['TWW', 'TWNSW', 'FF'].includes(value),
+  },
+  title: {
+    type: String,
+    required: true,
+  },
+  dialogTitle: {
+    type: String,
+    required: true,
+  },
   ideas: [{
     id: String,
     column: 'TWW' | 'TWNSW' | 'FF',
