@@ -1,12 +1,15 @@
 <script setup>
 import Column from "@/components/Column.vue";
-import {useRetroIdeasStore} from "@/stores/retroIdeas.js";
+import {useIdeasStore} from "@/stores/ideasStore.js";
+import {useRoomStore} from "@/stores/roomStore.js";
 import {storeToRefs} from "pinia";
 import {onUnmounted, watch} from "vue";
 import pocketbase from "@/plugins/pocketbase.js";
 
-const ideasStore = useRetroIdeasStore()
-const {thingsWentWell, thingsWentNotSoWell, feelings, roomId} = storeToRefs(ideasStore)
+const ideasStore = useIdeasStore()
+const roomStore = useRoomStore()
+const {thingsWentWell, thingsWentNotSoWell, feelings} = storeToRefs(ideasStore)
+const {roomId} = storeToRefs(roomStore)
 
 let ideasSubscription
 

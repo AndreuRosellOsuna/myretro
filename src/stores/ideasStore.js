@@ -1,10 +1,9 @@
 import {defineStore} from 'pinia'
 import pocketbase from "@/plugins/pocketbase.js";
+import {useRoomStore} from "@/stores/roomStore.js";
 
-export const useRetroIdeasStore = defineStore('retroIdeas', {
+export const useIdeasStore = defineStore('ideasStore', {
   state: () => ({
-    roomId: "",
-    roomName: "",
     /** @type {{ id: number, column: 'TWW' | 'TWNSW' | 'FF', text: string }[]} */
     ideas: [],
   }),
@@ -14,27 +13,15 @@ export const useRetroIdeasStore = defineStore('retroIdeas', {
     feelings: state => state.ideas.filter(e => e.column === "FF"),
   },
   actions: {
-    setRoomId(roomId) {
-      this.roomId = roomId
-      this.refreshIdeas()
-    },
-    async createRoom(roomName) {
-      const newRoom = await pocketbase.collection("rooms").create({name: roomName})
-      this.roomName = newRoom.name
-      this.setRoomId(newRoom.id)
-    },
-    async joinRoom(roomId) {
-      const room = await pocketbase.collection("rooms").getOne(roomId)
-      this.roomName = room.name
-      this.setRoomId(roomId)
-    },
     async addIdea(column, text) {
-      await pocketbase.collection("ideas").create({column, text, room: this.roomId})
+      const roomStore = useRoomStore()
+      await pocketbase.collection("ideas").create({column, text, room: roomStore.roomId})
     },
     refreshIdeas() {
-      if (!this.roomId) return
+      const roomStore = useRoomStore()
+      if (!roomStore.roomId) return
       pocketbase.collection("ideas")
-        .getFullList({ filter: `room.id = '${this.roomId}'`})
+        .getFullList({ filter: `room.id = '${roomStore.roomId}'`})
         .then(ideas => {
           const ideasFromServer = ideas.map(idea => ({id: idea.id, column: idea.column, text: idea.text}))
           this.ideas = []

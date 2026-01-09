@@ -1,9 +1,10 @@
 <script setup>
 
 import {ref} from "vue";
-import {useRetroIdeasStore} from "@/stores/retroIdeas.js";
+import {useRoomStore} from "@/stores/roomStore.js";
 import {storeToRefs} from "pinia";
-const ideasStore = useRetroIdeasStore()
+
+const roomStore = useRoomStore()
 
 const retroRoomId = ref('')
 const roomIdRules = {
@@ -15,7 +16,7 @@ const roomNameRules = {
   max: value => value.length <= 50 || 'Max 50 characters',
 }
 
-const {roomName} = storeToRefs(ideasStore)
+const {roomName} = storeToRefs(roomStore)
 
 const openAddRoomDialog = ref(false)
 const newRoomName = ref("")
@@ -30,13 +31,13 @@ function cancelDialog() {
 }
 
 const createNewRoom = () => {
-  ideasStore.createRoom(newRoomName.value)
+  roomStore.createRoom(newRoomName.value)
   cleanAndCloseDialog()
 }
 
 const enterRoom = () => {
   if (!retroRoomId.value) return
-  ideasStore.joinRoom(retroRoomId.value)
+  roomStore.joinRoom(retroRoomId.value)
 }
 
 </script>
