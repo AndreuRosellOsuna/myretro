@@ -21,7 +21,7 @@ watch(roomId, () => {
   }
 })
 
-onUnmounted(() => ideasSubscription.unsubscribe())
+onUnmounted(() => ideasSubscription && ideasSubscription.unsubscribe())
 
 function addNewIdea(column, ideaText){
   ideasStore.addIdea(column, ideaText)
