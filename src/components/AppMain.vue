@@ -4,7 +4,6 @@ import {useIdeasStore} from "@/stores/ideasStore.js";
 import {useRoomStore} from "@/stores/roomStore.js";
 import {storeToRefs} from "pinia";
 import {onUnmounted, watch} from "vue";
-import pocketbase from "@/plugins/pocketbase.js";
 
 const ideasStore = useIdeasStore()
 const roomStore = useRoomStore()
@@ -16,11 +15,7 @@ let ideasSubscription
 watch(roomId, () => {
   if(roomId.value !== "") {
     ideasSubscription && ideasSubscription.unsubscribe()
-    ideasSubscription = pocketbase.collection("ideas").subscribe("*", event => {
-      ideasStore.refreshIdeas()
-    }, {
-      filter: `room.id = '${roomId.value}'`
-    })
+    ideasSubscription = ideasStore.subscribeToIdeas(roomId.value)
   } else {
     ideasSubscription.unsubscribe()
   }

@@ -31,5 +31,12 @@ export const useIdeasStore = defineStore('ideasStore', {
     async removeIdea(ideaId) {
       await pocketbase.collection("ideas").delete(ideaId)
     },
+    subscribeToIdeas(roomId) {
+      return pocketbase.collection("ideas").subscribe("*", event => {
+        this.refreshIdeas()
+      }, {
+        filter: `room.id = '${roomId}'`
+      })
+    },
   }
 })
