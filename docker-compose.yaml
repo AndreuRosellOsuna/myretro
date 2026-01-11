@@ -1,22 +1,22 @@
 name: myretro-service
 networks:
-  myretro_network:
-    driver: bridge
+  reverse_proxy_network:
+    external: true
 volumes:
   pocketbase-data: null
 services:
   myretro-front:
-    image: andreuro/myretro:0.0.2
+    image: andreuro/myretro:latest
     container_name: myretro
     networks:
-      - myretro_network
+      - reverse_proxy_network
     ports:
       - 127.0.0.1:3000:3000
   pocketbase:
     image: andreuro/myretropocket:0.0.1
     container_name: myretropocket-db
     networks:
-      - myretro_network
+      - reverse_proxy_network
     ports:
       - 127.0.0.1:8090:8090
     volumes:
