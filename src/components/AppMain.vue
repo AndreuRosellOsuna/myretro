@@ -36,7 +36,7 @@ function removeIdea(ideaId){
 <template>
   <v-main>
     <v-container class="fill-height" style="background-color: beige">
-      <v-row align="start">
+      <v-row>
 
         <Column column="TWW"
                 title="Things that went well"

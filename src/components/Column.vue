@@ -45,7 +45,7 @@ function addNewIdea(){
 </script>
 
 <template>
-  <v-col >
+  <v-col class="mx-5 opacity-80 rounded shadowed">
     <div class="ml-3" @click="openAddIdeaDialog = true" >
       <h2 class="cursor-pointer"><v-icon color="black" icon="mdi-plus-circle"></v-icon >{{ title }}</h2>
       <v-dialog max-width="700" v-model="openAddIdeaDialog" persistent>
@@ -81,3 +81,9 @@ function addNewIdea(){
     </v-sheet>
   </v-col>
 </template>
+
+<style >
+.shadowed {
+  box-shadow: 5px 5px 2px rgba(0,0,0,0.45);
+}
+</style>
