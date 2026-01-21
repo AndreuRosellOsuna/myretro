@@ -4,6 +4,7 @@ import {useIdeasStore} from "@/stores/ideasStore.js";
 import {useRoomStore} from "@/stores/roomStore.js";
 import {storeToRefs} from "pinia";
 import {onUnmounted, watch} from "vue";
+import Timer from "@/components/Timer.vue";
 
 const ideasStore = useIdeasStore()
 const roomStore = useRoomStore()
@@ -35,6 +36,9 @@ function removeIdea(ideaId){
 
 <template>
   <v-main>
+    <div class="timer-container position-absolute v-container fill-height">
+      <Timer></Timer>
+    </div>
     <v-container class="fill-height" style="background-color: beige">
       <v-row>
 
@@ -68,3 +72,12 @@ function removeIdea(ideaId){
     </v-container>
   </v-main>
 </template>
+
+<style scoped>
+.timer-container {
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+</style>
