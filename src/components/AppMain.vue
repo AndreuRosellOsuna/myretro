@@ -18,7 +18,7 @@ watch(roomId, () => {
     ideasSubscription && ideasSubscription.unsubscribe()
     ideasSubscription = ideasStore.subscribeToIdeas(roomId.value)
   } else {
-    ideasSubscription.unsubscribe()
+    ideasSubscription && ideasSubscription.unsubscribe()
   }
 })
 

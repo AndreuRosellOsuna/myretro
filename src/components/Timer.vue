@@ -20,7 +20,7 @@ watch(roomId, () => {
     roomSubscription && roomSubscription.unsubscribe()
     roomSubscription = roomStore.subscribeToRoom()
   } else {
-    roomSubscription.unsubscribe()
+    roomSubscription && roomSubscription.unsubscribe()
   }
 })
 onUnmounted(() => roomSubscription && roomSubscription.unsubscribe())
