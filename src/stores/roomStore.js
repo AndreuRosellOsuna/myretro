@@ -27,7 +27,7 @@ export const useRoomStore = defineStore('roomStore', {
     },
     async setEndTimeAndEnableEditing() {
       const now = new Date()
-      now.setSeconds(now.getSeconds() + 10);
+      now.setSeconds(now.getSeconds() + 2 * 60);
       await pocketbase.collection("rooms").update(this.roomId, {ideasEndDate: now.toUTCString(), editable: true})
     },
     async finishEditing() {

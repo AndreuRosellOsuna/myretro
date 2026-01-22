@@ -20,4 +20,13 @@ const app = createApp(App)
 
 registerPlugins(app)
 
+app.directive('hidden', (el, binding) => {
+  // this will be called for both `mounted` and `updated`
+  if(binding.value === true) {
+    el.style.visibility = "hidden"
+  } else {
+    el.style.visibility = "visible"
+  }
+})
+
 app.mount('#app')
