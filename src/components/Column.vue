@@ -1,6 +1,8 @@
 <script setup>
 
 import {ref} from "vue";
+import {useRoomStore} from "@/stores/roomStore.js";
+import {storeToRefs} from "pinia";
 
 const emit = defineEmits(['addNewIdea', 'removeIdea'])
 const { column } = defineProps({
@@ -28,6 +30,9 @@ const openAddIdeaDialog = ref(false)
 const newIdeaValue = ref('')
 const newIdeaMaxValue = [v => v.length < 100 || 'Max 100 characters']
 
+const roomStore = useRoomStore()
+const {editable} = storeToRefs(roomStore)
+
 function cleanAndCloseDialog() {
   openAddIdeaDialog.value = false
   newIdeaValue.value = ''
@@ -42,12 +47,18 @@ function addNewIdea(){
   cleanAndCloseDialog()
 }
 
+function openAddIdeaDialogFunction() {
+  if(editable.value) {
+    return openAddIdeaDialog.value = true
+  }
+}
+
 </script>
 
 <template>
-  <v-col class="mx-5 opacity-80 rounded shadowed">
-    <div class="ml-3" @click="openAddIdeaDialog = true" >
-      <h2 class="cursor-pointer"><v-icon color="black" icon="mdi-plus-circle"></v-icon >{{ title }}</h2>
+  <v-col class="mx-5 rounded ideas-column" :class="{'disabled': !editable}">
+    <div class="ml-3" @click="openAddIdeaDialogFunction" >
+      <h2 class="ideas-column-title"><v-icon color="black" icon="mdi-plus-circle"></v-icon >{{ title }}</h2>
       <v-dialog max-width="700" v-model="openAddIdeaDialog" persistent>
         <template v-slot:default>
           <v-card :title="dialogTitle" prepend-icon="mdi-information-variant-box">
@@ -83,7 +94,18 @@ function addNewIdea(){
 </template>
 
 <style >
-.shadowed {
+.ideas-column-title {
+  cursor: pointer;
+}
+.disabled .ideas-column-title {
+  cursor: not-allowed;
+}
+.ideas-column {
   box-shadow: 5px 5px 2px rgba(0,0,0,0.45);
+  opacity: 0.8;
+}
+.ideas-column.disabled {
+  cursor: not-allowed !important;
+  opacity: 0.60;
 }
 </style>
