@@ -25,7 +25,7 @@ watch(roomId, () => {
 })
 onUnmounted(() => roomSubscription && roomSubscription.unsubscribe())
 
-watch(editable, (foo) => {
+watch(editable, () => {
   if(editable.value === true && ideasEndDate.value && distanceInMs(ideasEndDate.value) > 0) {
     setTimerAndScheduleStopEditing()
   }
@@ -59,7 +59,7 @@ function setTimerAndScheduleStopEditing() {
   if(ideasEndDate.value) {
     timeoutInSeconds = Math.floor((distanceInMs(ideasEndDate.value)) / 1000)
   } else {
-    timeoutInSeconds = 10
+    timeoutInSeconds = 2 * 60
   }
 
   const { start: startCountdown } = useCountdown(timeoutInSeconds, {
