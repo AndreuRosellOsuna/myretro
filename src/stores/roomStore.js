@@ -17,7 +17,7 @@ export const useRoomStore = defineStore('roomStore', {
     },
     async createRoom(roomName) {
       const newRoom = await pocketbase.collection("rooms").create({name: roomName, editable: true})
-      this.$patch({roomId: newRoom.id, roomName: newRoom.name, editable: true, finished: false})
+      this.$patch({roomId: newRoom.id, roomName: newRoom.name, editable: false, finished: false})
       this.loadIdeas()
     },
     async joinRoom(roomId) {
