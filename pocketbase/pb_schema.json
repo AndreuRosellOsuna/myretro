@@ -903,6 +903,35 @@
       },
       {
         "hidden": false,
+        "id": "date331160525",
+        "max": "",
+        "min": "",
+        "name": "ideasEndDate",
+        "presentable": false,
+        "required": false,
+        "system": false,
+        "type": "date"
+      },
+      {
+        "hidden": false,
+        "id": "bool2636136329",
+        "name": "editable",
+        "presentable": false,
+        "required": false,
+        "system": false,
+        "type": "bool"
+      },
+      {
+        "hidden": false,
+        "id": "bool2790239036",
+        "name": "finished",
+        "presentable": false,
+        "required": false,
+        "system": false,
+        "type": "bool"
+      },
+      {
+        "hidden": false,
         "id": "autodate2990389176",
         "name": "created",
         "onCreate": true,
